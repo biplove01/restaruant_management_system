@@ -1,6 +1,10 @@
 package com.crudSE.demo.models.Customer;
 
 import com.crudSE.demo.DTOs.CustomerDTO;
+import com.crudSE.demo.models.OrderList;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 public class CustomerMapper {
     public static CustomerDTO mapToCustomerDTO(Customer customer){
@@ -10,16 +14,6 @@ public class CustomerMapper {
         customer.getEmail(),
         customer.getAddress(),
         customer.getPhone()
-    );
-  }
-
-  public static Customer mapToCustomer(CustomerDTO customerDTO){
-    return new Customer(
-        customerDTO.getId(),
-        customerDTO.getName(),
-        customerDTO.getEmail(),
-        customerDTO.getAddress(),
-        customerDTO.getPhone()
     );
   }
 }
