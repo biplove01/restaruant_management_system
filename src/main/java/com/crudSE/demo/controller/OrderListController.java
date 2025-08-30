@@ -23,7 +23,6 @@ public class OrderListController {
     return this.orderListService.createOrderList(orderList);
   }
   
-  
   @GetMapping("/{id}")
   public OrderList getOrderListById(@PathVariable Long id){
     return this.orderListService.getOrderListById(id);
