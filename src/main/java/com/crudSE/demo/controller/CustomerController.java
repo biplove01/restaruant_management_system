@@ -48,16 +48,17 @@ public class CustomerController {
   }
   
   
-//  OrderList added on custoemr controller itself
-  @PostMapping("/{id}/orderList/create")
+//  OrderList added on customer controller itself
+  @PostMapping("/orderList/create")
   public OrderList createOrderList(@RequestBody OrderList orderList){
     return this.orderListService.createOrderList(orderList);
   }
   
-//  @GetMapping("/{id}")
-//  public OrderList getOrderListById(@PathVariable Long id){
-//    return this.orderListService.getOrderListById(id);
-//  }
+  @GetMapping("/orderList/{id}")
+  public OrderList getOrderListById(@PathVariable Long id){
+    return this.orderListService.getOrderListById(id);
+  }
+  
 //
 //
 //  @GetMapping("/all")

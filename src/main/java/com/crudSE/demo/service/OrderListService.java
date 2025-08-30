@@ -34,6 +34,8 @@ public class OrderListService {
     return this.orderListRepository.save(orderList);
   }
   
+//  public OrderList createOrderListByTable(OrderList orderList)
+  
   public OrderList getOrderListById(Long id) {
     return this.orderListRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Order list of id: " + id + " does not exists"));
   }
