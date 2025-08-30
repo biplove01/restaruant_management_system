@@ -29,6 +29,9 @@ public class CustomerService {
   }
   
   public CustomerDTO getCustomerById(Long id) {
+    
+    
+    
     return CustomerMapper.mapToCustomerDTO(this.customerRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("The user does not exists with id: "+ id )));
   }
   
