@@ -2,7 +2,9 @@ package com.crudSE.demo.controller;
 
 import com.crudSE.demo.DTOs.CustomerDTO;
 import com.crudSE.demo.models.Customer.Customer;
+import com.crudSE.demo.models.OrderList;
 import com.crudSE.demo.service.CustomerService;
+import com.crudSE.demo.service.OrderListService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +15,11 @@ import java.util.List;
 public class CustomerController {
   
   private final CustomerService customerService;
+  private final OrderListService orderListService;
   
-  public CustomerController( CustomerService customerService) {
+  public CustomerController( CustomerService customerService, OrderListService orderListService) {
     this.customerService = customerService;
+    this.orderListService = orderListService;
   }
   
   @PostMapping("/create")
@@ -44,5 +48,31 @@ public class CustomerController {
   }
   
   
+//  OrderList added on custoemr controller itself
+  @PostMapping("/{id}/orderList/create")
+  public OrderList createOrderList(@RequestBody OrderList orderList){
+    return this.orderListService.createOrderList(orderList);
+  }
   
+//  @GetMapping("/{id}")
+//  public OrderList getOrderListById(@PathVariable Long id){
+//    return this.orderListService.getOrderListById(id);
+//  }
+//
+//
+//  @GetMapping("/all")
+//  public List<OrderList> getAllOrderList(){
+//    return this.orderListService.getAllOrderLists();
+//  }
+//
+//
+//  @PostMapping("/update")
+//  public OrderList updateOrderList(@RequestBody OrderList orderList){
+//    return this.orderListService.updateOrderList(orderList);
+//  }
+  
+//  @DeleteMapping
+//  public ResponseEntity<String> deleteOrderList(@RequestBody OrderList orderList){
+//    return ResponseEntity.ok(this.orderListService.deleteOrderList(orderList));
+//  }
 }
