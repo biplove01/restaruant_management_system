@@ -17,5 +17,4 @@ public class MenuItem {
   private String name;
   private Float price;
   private MenuItemCategory category;
-
 }

@@ -29,11 +29,6 @@ public class MenuItemController {
     return this.menuItemService.getMenuItemById(id);
   }
   
-//
-//  @GetMapping("/{name}")
-//  public MenuItem getMenuItemByName(@PathVariable String name){
-//    return this.menuItemService.getMenuItemByName(name);
-//  }
   
   
   @GetMapping("/all")

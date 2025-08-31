@@ -3,19 +3,20 @@ package com.crudSE.demo.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
+@jakarta.persistence.Table(name = "restaurant_table")
 public class Table {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
-  @OneToMany
-  @JoinColumn(name = "table_customers")
-  private List<OrderItem> orderItems = new ArrayList<>();
   
+  private String tableNumber;
+  
+  @OneToOne
+  @JoinColumn(name = "table_orderList")
+  private OrderList orderList;
 }

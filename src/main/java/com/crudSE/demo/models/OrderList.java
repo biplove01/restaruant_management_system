@@ -1,6 +1,5 @@
 package com.crudSE.demo.models;
 
-import com.crudSE.demo.models.Customer.Customer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -21,7 +20,7 @@ public class OrderList {
   private List<OrderItem> orderItems;
 
   @ManyToOne
-  @JoinColumn(name = "customer_id")
+  @JoinColumn(name = "table_id")
   @JsonBackReference
-  private Customer customer;
+  private Table table;
 }

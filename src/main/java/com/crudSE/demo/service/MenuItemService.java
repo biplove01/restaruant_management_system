@@ -17,6 +17,8 @@ public class MenuItemService {
     this.menuItemRepository = menuItemRepository;
   }
   
+  
+  
   public MenuItem createMenuItem(MenuItem menuItem) {
     if(this.menuItemRepository.existsByName(menuItem.getName())){
       throw new AlreadyExistsException("Menu item with the name: " + menuItem.getName() + " already exists!");
@@ -24,18 +26,26 @@ public class MenuItemService {
     return this.menuItemRepository.save(menuItem);
   }
   
+  
+  
   public MenuItem getMenuItemById(Long id) {
     return this.menuItemRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Menu item with id: " + id + " does not exists"));
   }
+  
+  
   
   public MenuItem getMenuItemByName(String name) {
     return this.menuItemRepository.findByName(name).orElseThrow(()-> new ResourceNotFoundException("Menu item with name: " + name + " does not exists"));
     
   }
   
+  
+  
   public List<MenuItem> getAllMenuItems() {
     return this.menuItemRepository.findAll();
   }
+  
+  
   
   public MenuItem updateMenuItem(MenuItem menuItem) {
     
@@ -51,6 +61,8 @@ public class MenuItemService {
 
     return this.menuItemRepository.save(existingMenuItem);
   }
+  
+  
   
   public String deleteMenuItem(MenuItem menuItem) {
     
