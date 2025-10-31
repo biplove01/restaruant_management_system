@@ -36,7 +36,6 @@ public class MenuItemService {
   
   public MenuItem getMenuItemByName(String name) {
     return this.menuItemRepository.findByName(name).orElseThrow(()-> new ResourceNotFoundException("Menu item with name: " + name + " does not exists"));
-    
   }
   
   
@@ -49,7 +48,7 @@ public class MenuItemService {
   
   public MenuItem updateMenuItem(MenuItem menuItem) {
     
-    if(this.menuItemRepository.existsByName(menuItem.getName()) || this.menuItemRepository.existsById(menuItem.getId())){
+    if(!this.menuItemRepository.existsByName(menuItem.getName()) || !this.menuItemRepository.existsById(menuItem.getId())){
       throw new ResourceNotFoundException("No such menu item exists with name: "+ menuItem.getName() + " and id: "+ menuItem.getId());
     }
     

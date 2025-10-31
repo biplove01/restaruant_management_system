@@ -10,19 +10,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/menuItem")
 public class MenuItemController {
-  
+
   private final MenuItemService menuItemService;
   
   public MenuItemController(MenuItemService menuItemService) {
     this.menuItemService = menuItemService;
   }
   
-  
   @PostMapping("/create")
   public MenuItem createMenuItem(@RequestBody MenuItem menuItem){
     return this.menuItemService.createMenuItem(menuItem);
   }
-  
   
   @GetMapping("/{id}")
   public MenuItem getMenuItemById(@PathVariable Long id){
@@ -30,11 +28,11 @@ public class MenuItemController {
   }
   
   
-  
   @GetMapping("/all")
   public List<MenuItem> getAllMenuItem(){
     return this.menuItemService.getAllMenuItems();
   }
+  
   
   @PostMapping("/update")
   public MenuItem updateMenuItem(@RequestBody MenuItem menuItem){

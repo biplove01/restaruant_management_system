@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/employee")
 public class EmployeeController {
+  
   private final EmployeeService employeeService;
   
   
@@ -28,10 +29,12 @@ public class EmployeeController {
     return this.employeeService.getEmployeeById(id);
   }
   
+  
   @GetMapping("/all")
   public List<EmployeeDTO> getAllEmployee(){
     return this.employeeService.getAllEmployees();
   }
+  
   
   @DeleteMapping
   public ResponseEntity<String> deleteEmployee(@RequestBody EmployeeDTO employee){

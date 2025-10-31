@@ -47,14 +47,14 @@ public class TableController {
   }
   
   
-  @PostMapping("/orderList/create")
-  public OrderList createOrderList(@RequestBody OrderList orderList){
-    return this.orderListService.createOrderList(orderList);
-  }
-  
-  @GetMapping("/orderList/{id}")
-  public OrderList getOrderListById(@PathVariable Long id){
-    return this.orderListService.getOrderListById(id);
-  }
+//  @PostMapping("/orderList/create")
+//  public OrderList createOrderList(@RequestBody OrderList orderList){
+//    return this.orderListService.createOrderList(orderList);
+//  }
+//
+//  @GetMapping("/orderList/{id}")
+//  public OrderList getOrderListById(@PathVariable Long id){
+//    return this.orderListService.getOrderListById(id);
+//  }
 
 }

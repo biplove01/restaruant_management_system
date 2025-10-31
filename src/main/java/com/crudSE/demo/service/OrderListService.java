@@ -6,6 +6,7 @@ import com.crudSE.demo.models.OrderItem;
 import com.crudSE.demo.models.Table;
 import com.crudSE.demo.repositories.OrderListRepository;
 import com.crudSE.demo.repositories.TableRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +21,11 @@ public class OrderListService {
     this.orderListRepository = orderListRepository;
     this.tableRepository = tableRepository;
   }
-  
+
+  @Transactional
   public OrderList createOrderList(OrderList orderList) {
     Table table = this.tableRepository.findById(orderList.getTable().getId())
-        .orElseThrow(() -> new ResourceNotFoundException("Table of id: " + orderList.getTable().getId() + " does not exist"));
+        .orElseThrow(() -> new ResourceNotFoundException("Table with ID: " + orderList.getTable().getId() + " does not exist"));
     
     orderList.setTable(table);
     
@@ -34,14 +36,17 @@ public class OrderListService {
     return this.orderListRepository.save(orderList);
   }
   
+  
   public OrderList getOrderListById(Long id) {
     return this.orderListRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Order list of id: " + id + " does not exist"));
   }
   
+  
   public List<OrderList> getAllOrderLists() {
     return this.orderListRepository.findAll();
   }
+  
   
   public OrderList updateOrderList(OrderList updatedOrderList) {
     OrderList existingOrderList = this.orderListRepository.findById(updatedOrderList.getId())
@@ -62,6 +67,7 @@ public class OrderListService {
     
     return this.orderListRepository.save(existingOrderList);
   }
+  
   
   public String deleteOrderList(OrderList orderList) {
     if (!this.orderListRepository.existsById(orderList.getId())) {
