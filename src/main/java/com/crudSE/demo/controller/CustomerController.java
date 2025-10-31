@@ -21,8 +21,8 @@ public class CustomerController {
   @PostMapping("/create")
   public CustomerDTO createCustomer(@RequestBody Customer customer){
     return this.customerService.createCustomer(customer);
-  }
-  
+  }cd
+  //. hello
   @GetMapping("/{id}")
   public CustomerDTO getCustomerById(@PathVariable Long id){
     return this.customerService.getCustomerById(id);
