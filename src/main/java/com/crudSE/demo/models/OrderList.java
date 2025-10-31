@@ -9,9 +9,13 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-@Entity
 @Data
+@Entity
 public class OrderList {
-  
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private float totalAmount;
+    private OrderStatus status;
+    private LocalDateTime orderDate;
 }
