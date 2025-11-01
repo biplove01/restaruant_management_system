@@ -69,12 +69,12 @@ public class OrderListService {
   }
   
   
-  public String deleteOrderList(OrderList orderList) {
-    if (!this.orderListRepository.existsById(orderList.getId())) {
-      throw new ResourceNotFoundException("Order list of id: " + orderList.getId() + " does not exist");
+  public String deleteOrderList(Long id) {
+    if (!this.orderListRepository.existsById(id)) {
+      throw new ResourceNotFoundException("Order list of id: " + id + " does not exist");
     }
     
-    this.orderListRepository.delete(orderList);
-    return "Order list of id: " + orderList.getId() + " successfully deleted";
+    this.orderListRepository.deleteById(id);
+    return "Order list of id: " + id + " successfully deleted";
   }
 }

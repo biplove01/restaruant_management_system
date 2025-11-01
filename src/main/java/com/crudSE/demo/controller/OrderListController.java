@@ -40,9 +40,9 @@ public class OrderListController {
     return this.orderListService.updateOrderList(orderList);
   }
   
-  @DeleteMapping
-  public ResponseEntity<String> deleteOrderList(@RequestBody OrderList orderList){
-    return ResponseEntity.ok(this.orderListService.deleteOrderList(orderList));
+  @DeleteMapping("{id}")
+  public ResponseEntity<String> deleteOrderList(@PathVariable Long id){
+    return ResponseEntity.ok(this.orderListService.deleteOrderList(id));
   }
   
 }

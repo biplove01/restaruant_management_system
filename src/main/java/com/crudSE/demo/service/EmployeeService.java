@@ -53,12 +53,12 @@ public class EmployeeService {
   }
   
   
-  public String deleteEmployee(EmployeeDTO employee) {
-    if(!this.employeeRepository.existsByEmail(employee.getEmail())){
-      throw new ResourceNotFoundException("Employee with email: " + employee.getEmail() + " does not exists");
+  public String deleteEmployee(Long id) {
+    if(!this.employeeRepository.existsById(id)){
+      throw new ResourceNotFoundException("Employee with id: " + id + " does not exists");
     }
-    this.employeeRepository.deleteById(employee.getId());
+    this.employeeRepository.deleteById(id);
     
-    return "User of id " + employee.getId() + " successfully deleted";
+    return "User of id " + id + " successfully deleted";
   }
 }

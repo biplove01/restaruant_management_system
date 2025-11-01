@@ -36,9 +36,9 @@ public class EmployeeController {
   }
   
   
-  @DeleteMapping
-  public ResponseEntity<String> deleteEmployee(@RequestBody EmployeeDTO employee){
-    return ResponseEntity.ok(this.employeeService.deleteEmployee(employee));
+  @DeleteMapping("{id}")
+  public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
+    return ResponseEntity.ok(this.employeeService.deleteEmployee(id));
   }
   
   @PostMapping("/update")

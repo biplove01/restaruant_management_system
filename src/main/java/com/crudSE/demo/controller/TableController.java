@@ -41,7 +41,7 @@ public class TableController {
     return ResponseEntity.ok(this.tableService.deleteTable(id));
   }
   
-  @PutMapping("/update/{id}")
+  @PostMapping("/update/{id}")
   public Table updateTable(@PathVariable Long id, @RequestBody Table table){
     return this.tableService.updateTable(id, table);
   }

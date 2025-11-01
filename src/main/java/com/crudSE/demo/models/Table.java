@@ -1,7 +1,11 @@
 package com.crudSE.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 
 @Data
@@ -16,7 +20,7 @@ public class Table {
   
   private String tableNumber;
   
-  @OneToOne
-  @JoinColumn(name = "table_orderList")
-  private OrderList orderList;
+  @OneToMany(mappedBy = "table", cascade = CascadeType.ALL)
+  @JsonManagedReference
+  private List<OrderList> orderList;
 }
