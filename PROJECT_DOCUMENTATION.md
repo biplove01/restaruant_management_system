@@ -443,5 +443,4 @@ mvn spring-boot:run
 
 ---
 
-**Version**: 1.0.0
 **Last Updated**: 2024
