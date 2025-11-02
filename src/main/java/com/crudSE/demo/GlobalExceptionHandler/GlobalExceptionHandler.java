@@ -29,4 +29,11 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);  // now 404
   }
   
+  @ExceptionHandler(RuntimeException.class)
+  public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
+    Map<String, String> response = new HashMap<>();
+    response.put("error", ex.getMessage());
+    return ResponseEntity.badRequest().body(response); // sends 400 + message
+  }
+  
 }

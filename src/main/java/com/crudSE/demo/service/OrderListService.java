@@ -1,9 +1,11 @@
 package com.crudSE.demo.service;
 
 import com.crudSE.demo.GlobalExceptionHandler.CustomExceptions.ResourceNotFoundException;
+import com.crudSE.demo.models.MenuItem;
 import com.crudSE.demo.models.OrderList;
 import com.crudSE.demo.models.OrderItem;
 import com.crudSE.demo.models.Table;
+import com.crudSE.demo.repositories.MenuItemRepository;
 import com.crudSE.demo.repositories.OrderListRepository;
 import com.crudSE.demo.repositories.TableRepository;
 import jakarta.transaction.Transactional;
@@ -16,12 +18,15 @@ public class OrderListService {
   
   private final OrderListRepository orderListRepository;
   private final TableRepository tableRepository;
+  private final MenuItemRepository menuItemRepository;
   
-  public OrderListService(OrderListRepository orderListRepository, TableRepository tableRepository) {
+  
+  public OrderListService(OrderListRepository orderListRepository, TableRepository tableRepository, MenuItemRepository menuItemRepository) {
     this.orderListRepository = orderListRepository;
     this.tableRepository = tableRepository;
+    this.menuItemRepository = menuItemRepository;
   }
-
+  
   @Transactional
   public OrderList createOrderList(OrderList orderList) {
     Table table = this.tableRepository.findById(orderList.getTable().getId())
@@ -30,6 +35,10 @@ public class OrderListService {
     orderList.setTable(table);
     
     for (OrderItem item : orderList.getOrderItems()) {
+      MenuItem menuItem = menuItemRepository.findById(item.getMenuItem().getId())
+          .orElseThrow(() -> new ResourceNotFoundException("Menu item with ID: " + item.getMenuItem().getId() + " not found"));
+      
+      item.setMenuItem(menuItem);
       item.setOrderList(orderList);
     }
     

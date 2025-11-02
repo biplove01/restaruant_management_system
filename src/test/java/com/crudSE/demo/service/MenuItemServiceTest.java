@@ -31,8 +31,8 @@ class MenuItemServiceTest {
     private MenuItemService menuItemService;
 
     private MenuItem menuItem;
-    
-    
+
+
     @BeforeEach
     void setUp() {
         menuItem = new MenuItem();
@@ -209,7 +209,7 @@ class MenuItemServiceTest {
         when(menuItemRepository.existsById(1L)).thenReturn(true);
         doNothing().when(menuItemRepository).deleteById(1L);
 
-        String result = menuItemService.deleteMenuItem(menuItem);
+        String result = menuItemService.deleteMenuItem(1L);
 
         assertEquals("Menu item successfully deleted", result);
         verify(menuItemRepository, times(1)).existsById(1L);
@@ -218,11 +218,10 @@ class MenuItemServiceTest {
 
     @Test
     void deleteMenuItem_NotFound() {
-        menuItem.setId(999L);
         when(menuItemRepository.existsById(999L)).thenReturn(false);
 
         assertThrows(ResourceNotFoundException.class, () -> {
-            menuItemService.deleteMenuItem(menuItem);
+            menuItemService.deleteMenuItem(999L);
         });
 
         verify(menuItemRepository, times(1)).existsById(999L);

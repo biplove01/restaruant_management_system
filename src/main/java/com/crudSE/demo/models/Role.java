@@ -1,5 +1,6 @@
 package com.crudSE.demo.models;
 
+import com.crudSE.demo.models.enums.RoleStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,5 +15,5 @@ public class Role {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
-  private String name;
+  private RoleStatus role;
 }

@@ -63,13 +63,13 @@ public class MenuItemService {
   
   
   
-  public String deleteMenuItem(MenuItem menuItem) {
+  public String deleteMenuItem(Long id) {
     
-    if (!this.menuItemRepository.existsById(menuItem.getId())) {
-      throw new ResourceNotFoundException("No such menu item exists with id: " + menuItem.getId());
+    if (!this.menuItemRepository.existsById(id)) {
+      throw new ResourceNotFoundException("No such menu item exists with id: " + id);
     }
     
-    this.menuItemRepository.deleteById(menuItem.getId());
+    this.menuItemRepository.deleteById(id);
     
     return "Menu item successfully deleted";
   }

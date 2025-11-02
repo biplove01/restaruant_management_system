@@ -4,6 +4,7 @@ import com.crudSE.demo.DTOs.EmployeeDTO;
 import com.crudSE.demo.GlobalExceptionHandler.CustomExceptions.AlreadyExistsException;
 import com.crudSE.demo.GlobalExceptionHandler.CustomExceptions.ResourceNotFoundException;
 import com.crudSE.demo.models.Employee.Employee;
+import com.crudSE.demo.models.enums.RoleStatus;
 import com.crudSE.demo.repositories.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class EmployeeServiceTest {
         employee.setAddress("123 Main St");
         employee.setPhone(1234567890L);
         employee.setPassword("password123");
-        employee.setRoles(new ArrayList<>());
+        employee.setRole(RoleStatus.WAITER);
     }
 
     @Test
@@ -104,7 +105,7 @@ class EmployeeServiceTest {
         employee2.setEmail("jane.smith@example.com");
         employee2.setAddress("456 Oak Ave");
         employee2.setPhone(9876543210L);
-        employee2.setRoles(new ArrayList<>());
+        employee2.setRole(RoleStatus.WAITER);
 
         List<Employee> employees = Arrays.asList(employee, employee2);
         when(employeeRepository.findAll()).thenReturn(employees);

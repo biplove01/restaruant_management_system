@@ -25,6 +25,19 @@ public class EmployeeService {
     if(this.employeeRepository.existsByEmail(employee.getEmail())){
       throw new AlreadyExistsException("The Employee with email: " + employee.getEmail() + " already exists");
     }
+    
+    if(String.valueOf(employee.getPhone()).length() != 10){
+      throw new RuntimeException("The phone should be of 10 numbers");
+    }
+    
+    if(!employee.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")){
+      throw new RuntimeException("Please enter valid email address format");
+    }
+    
+    if(employee.getPassword().length() < 5){
+      throw new RuntimeException("Password must be of at least 5 characters");
+    }
+    
     return EmployeeMapper.mapToEmployeeDTO( this.employeeRepository.save(employee));
   }
   

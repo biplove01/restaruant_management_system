@@ -1,6 +1,7 @@
 package com.crudSE.demo.models.Employee;
 
 import com.crudSE.demo.models.Role;
+import com.crudSE.demo.models.enums.RoleStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,13 +22,7 @@ public class Employee {
   private String address;
   private Long phone;
   private String password;
-  
-  @OneToMany(fetch = FetchType.EAGER, cascade = {
-      CascadeType.ALL,
-  })
-  @JoinTable(name="employee_roles", joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-  private List<Role> roles = new ArrayList<>();
-  
+  private RoleStatus role;
 }
 
 

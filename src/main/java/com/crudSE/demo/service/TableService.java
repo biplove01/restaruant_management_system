@@ -21,6 +21,11 @@ public class TableService {
     if(this.tableRepository.existsByTableNumber((table.getTableNumber()))){
       throw new AlreadyExistsException("The table with number: " + table.getTableNumber() + " already exists");
     }
+    
+    if(table.getTableNumber() == null){
+      throw new RuntimeException("Table number is required!");
+    }
+    
     return this.tableRepository.save(table);
   }
   

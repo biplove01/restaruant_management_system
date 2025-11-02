@@ -162,28 +162,23 @@ class MenuItemControllerTest {
 
     @Test
     void deleteMenuItem_Success() throws Exception {
-        when(menuItemService.deleteMenuItem(any(MenuItem.class))).thenReturn("Menu item successfully deleted");
+        when(menuItemService.deleteMenuItem(1L)).thenReturn("Menu item successfully deleted");
 
-        mockMvc.perform(delete("/api/menuItem")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(menuItem)))
+        mockMvc.perform(delete("/api/menuItem/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Menu item successfully deleted"));
 
-        verify(menuItemService, times(1)).deleteMenuItem(any(MenuItem.class));
+        verify(menuItemService, times(1)).deleteMenuItem(1L);
     }
 
     @Test
     void deleteMenuItem_NotFound() throws Exception {
-        menuItem.setId(999L);
-        when(menuItemService.deleteMenuItem(any(MenuItem.class)))
+        when(menuItemService.deleteMenuItem(999L))
                 .thenThrow(new ResourceNotFoundException("No such menu item exists with id: 999"));
 
-        mockMvc.perform(delete("/api/menuItem")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(menuItem)))
+        mockMvc.perform(delete("/api/menuItem/999"))
                 .andExpect(status().isNotFound());
 
-        verify(menuItemService, times(1)).deleteMenuItem(any(MenuItem.class));
+        verify(menuItemService, times(1)).deleteMenuItem(999L);
     }
 }

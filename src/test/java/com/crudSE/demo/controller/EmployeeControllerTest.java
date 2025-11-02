@@ -4,6 +4,7 @@ import com.crudSE.demo.DTOs.EmployeeDTO;
 import com.crudSE.demo.GlobalExceptionHandler.CustomExceptions.AlreadyExistsException;
 import com.crudSE.demo.GlobalExceptionHandler.CustomExceptions.ResourceNotFoundException;
 import com.crudSE.demo.models.Employee.Employee;
+import com.crudSE.demo.models.enums.RoleStatus;
 import com.crudSE.demo.service.EmployeeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,7 @@ class EmployeeControllerTest {
         employee.setAddress("123 Main St");
         employee.setPhone(1234567890L);
         employee.setPassword("password123");
-        employee.setRoles(new ArrayList<>());
+        employee.setRole(RoleStatus.WAITER);
 
         employeeDTO = new EmployeeDTO();
         employeeDTO.setId(1L);

@@ -39,9 +39,9 @@ public class MenuItemController {
     return this.menuItemService.updateMenuItem(menuItem);
   }
   
-  @DeleteMapping
-  public ResponseEntity<String> deleteMenuItem (@RequestBody MenuItem menuItem){
-    return ResponseEntity.ok(this.menuItemService.deleteMenuItem(menuItem));
+  @DeleteMapping("{id}")
+  public ResponseEntity<String> deleteMenuItem (@PathVariable Long id){
+    return ResponseEntity.ok(this.menuItemService.deleteMenuItem(id));
   }
   
 }

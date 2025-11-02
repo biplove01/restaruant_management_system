@@ -83,21 +83,19 @@ src/test/java/com/crudSE/demo/
 ### Entity Relationships
 
 ```
-Employee ──┬──> Role (Many-to-Many)
-           │
-OrderList ─┼──> Table (Many-to-One)
-           │
-OrderItem ─┴──> OrderList (Many-to-One)
-           │
-           └──> MenuItem (Many-to-One)
+OrderList ──> Table (Many-to-One)
+     │
+OrderItem ───> OrderList (Many-to-One)
+     │
+     └──> MenuItem (Many-to-One)
 ```
 
 ### Key Tables
 
 | Table | Key Fields | Relationships |
 |-------|------------|---------------|
-| `employee` | id, name, email (unique), phone, address, password | Many-to-Many with Role |
-| `role` | id, name | Many-to-Many with Employee |
+| `employee` | id, name, email (unique), phone, address, password, role (RoleStatus enum) | No foreign key relationships |
+| `role` | id, role (RoleStatus enum) | Independent entity |
 | `menu_item` | id, name (unique), price, category | One-to-Many with OrderItem |
 | `restaurant_table` | id, table_number (unique) | One-to-Many with OrderList |
 | `order_list` | id, table_id | Many-to-One with Table, One-to-Many with OrderItem |
@@ -125,7 +123,7 @@ OrderItem ─┴──> OrderList (Many-to-One)
 | POST | `/api/employee/update` | Update employee |
 | DELETE | `/api/employee/{id}` | Delete employee |
 
-**Example Request (Create)**:
+**POST `/api/employee/create` - Request Body**:
 ```json
 {
   "name": "John Doe",
@@ -133,27 +131,42 @@ OrderItem ─┴──> OrderList (Many-to-One)
   "address": "123 Main St",
   "phone": 1234567890,
   "password": "password123",
-  "roles": []
+  "role": "WAITER"
 }
 ```
+**Note**: `role` field accepts one of the following `RoleStatus` enum values:
+- `OWNER`
+- `MANAGER`
+- `CASHIER`
+- `WAITER`
+- `CHEF`
 
-**Example Response**:
+**GET `/api/employee/{id}` - Path Parameters**:
+- `id` (Long): Employee ID (e.g., `1`, `2`, `3`)
+
+**GET `/api/employee/all` - Request**:
+- No request body or parameters required
+
+**POST `/api/employee/update` - Request Body**:
 ```json
 {
   "id": 1,
   "name": "John Doe",
   "email": "john.doe@example.com",
-  "address": "123 Main St",
-  "phone": 1234567890
+  "address": "456 Updated St",
+  "phone": 9876543210,
+  "role": "MANAGER"
 }
 ```
+**Note**: `role` field accepts one of the following `RoleStatus` enum values:
+- `OWNER`
+- `MANAGER`
+- `CASHIER`
+- `WAITER`
+- `CHEF`
 
-**Error Response (400/404)**:
-```json
-{
-  "error": "Error message"
-}
-```
+**DELETE `/api/employee/{id}` - Path Parameters**:
+- `id` (Long): Employee ID (e.g., `1`, `2`, `3`)
 
 ---
 
@@ -165,9 +178,9 @@ OrderItem ─┴──> OrderList (Many-to-One)
 | GET | `/api/menuItem/{id}` | Get menu item by ID |
 | GET | `/api/menuItem/all` | Get all menu items |
 | POST | `/api/menuItem/update` | Update menu item |
-| DELETE | `/api/menuItem` | Delete menu item (body required) |
+| DELETE | `/api/menuItem/{id}` | Delete menu item |
 
-**Example Request (Create)**:
+**POST `/api/menuItem/create` - Request Body**:
 ```json
 {
   "name": "Burger",
@@ -175,6 +188,37 @@ OrderItem ─┴──> OrderList (Many-to-One)
   "category": "LUNCH"
 }
 ```
+**Note**: `category` field accepts one of the following `MenuItemCategory` enum values:
+- `BREAKFAST`
+- `LUNCH`
+- `HOT_DRINK`
+- `COLD_DRINK`
+- `ALCOHOL`
+
+**GET `/api/menuItem/{id}` - Path Parameters**:
+- `id` (Long): Menu item ID (e.g., `1`, `2`, `3`)
+
+**GET `/api/menuItem/all` - Request**:
+- No request body or parameters required
+
+**POST `/api/menuItem/update` - Request Body**:
+```json
+{
+  "id": 1,
+  "name": "Cheese Burger",
+  "price": 14.99,
+  "category": "LUNCH"
+}
+```
+**Note**: `category` field accepts one of the following `MenuItemCategory` enum values:
+- `BREAKFAST`
+- `LUNCH`
+- `HOT_DRINK`
+- `COLD_DRINK`
+- `ALCOHOL`
+
+**DELETE `/api/menuItem/{id}` - Path Parameters**:
+- `id` (Long): Menu item ID (e.g., `1`, `2`, `3`)
 
 ---
 
@@ -188,19 +232,69 @@ OrderItem ─┴──> OrderList (Many-to-One)
 | POST | `/api/orderList/update` | Update order |
 | DELETE | `/api/orderList/{id}` | Delete order |
 
-**Example Request (Create)**:
+**POST `/api/orderList/create` - Request Body**:
 ```json
 {
-  "table": { "id": 1 },
+  "table": {
+    "id": 1
+  },
   "orderItems": [
     {
       "quantity": 2,
       "orderStatus": "PENDING",
-      "menuItem": { "id": 1 }
+      "menuItem": {
+        "id": 1
+      }
+    },
+    {
+      "quantity": 1,
+      "orderStatus": "INITIAL",
+      "menuItem": {
+        "id": 3
+      }
     }
   ]
 }
 ```
+**Note**: `orderStatus` field accepts one of the following `OrderStatus` enum values:
+- `INITIAL`
+- `PENDING`
+- `READY`
+- `DELIVERED`
+
+**GET `/api/orderList/{id}` - Path Parameters**:
+- `id` (Long): Order list ID (e.g., `1`, `2`, `3`)
+
+**GET `/api/orderList/all` - Request**:
+- No request body or parameters required
+
+**POST `/api/orderList/update` - Request Body**:
+```json
+{
+  "id": 1,
+  "table": {
+    "id": 2
+  },
+  "orderItems": [
+    {
+      "id": 5,
+      "quantity": 3,
+      "orderStatus": "READY",
+      "menuItem": {
+        "id": 1
+      }
+    }
+  ]
+}
+```
+**Note**: `orderStatus` field accepts one of the following `OrderStatus` enum values:
+- `INITIAL`
+- `PENDING`
+- `READY`
+- `DELIVERED`
+
+**DELETE `/api/orderList/{id}` - Path Parameters**:
+- `id` (Long): Order list ID (e.g., `1`, `2`, `3`)
 
 ---
 
@@ -214,12 +308,31 @@ OrderItem ─┴──> OrderList (Many-to-One)
 | POST | `/api/table/update/{id}` | Update table |
 | DELETE | `/api/table/{id}` | Delete table |
 
-**Example Request (Create)**:
+**POST `/api/table/create` - Request Body**:
 ```json
 {
   "tableNumber": "T1"
 }
 ```
+
+**GET `/api/table/{id}` - Path Parameters**:
+- `id` (Long): Table ID (e.g., `1`, `2`, `3`)
+
+**GET `/api/table/all` - Request**:
+- No request body or parameters required
+
+**POST `/api/table/update/{id}` - Path Parameters**:
+- `id` (Long): Table ID (e.g., `1`, `2`, `3`)
+
+**POST `/api/table/update/{id}` - Request Body**:
+```json
+{
+  "tableNumber": "T2"
+}
+```
+
+**DELETE `/api/table/{id}` - Path Parameters**:
+- `id` (Long): Table ID (e.g., `1`, `2`, `3`)
 
 ---
 
@@ -235,7 +348,7 @@ public class Employee {
     private String address;
     private Long phone;
     private String password;
-    private List<Role> roles;    // Many-to-Many
+    private RoleStatus role;     // RoleStatus enum
 }
 ```
 
@@ -288,7 +401,7 @@ public class OrderItem {
 @Entity
 public class Role {
     private Long id;
-    private String name;
+    private RoleStatus role;     // RoleStatus enum
 }
 ```
 
@@ -349,6 +462,15 @@ public class Role {
 
 ---
 
+### RoleRepository
+**RoleRepository**: Standard JPA methods (extends `JpaRepository<Role, Long>`)
+- No custom query methods
+- Role entity is independent with no direct relationships
+
+**Note**: There are no Role-specific service or controller endpoints. The Role entity is used independently, and Employee uses `RoleStatus` enum directly rather than a relationship to Role entity.
+
+---
+
 ## Exception Handling
 
 ### GlobalExceptionHandler
@@ -371,8 +493,8 @@ Centralized exception handling using `@ControllerAdvice`:
 ## Testing
 
 ### Test Structure
-- **Controller Tests**: 4 test files covering all REST endpoints
-- **Service Tests**: 4 test files covering all business logic
+- **Controller Tests**: 4 test files covering all REST endpoints (Employee, MenuItem, OrderList, Table)
+- **Service Tests**: 4 test files covering all business logic (Employee, MenuItem, OrderList, Table)
 
 ### Test Coverage
 - **Total Test Files**: 8
@@ -385,6 +507,7 @@ Centralized exception handling using `@ControllerAdvice`:
 - Edge cases (empty lists, null handling)
 - HTTP status code validation
 - JSON response validation
+- RoleStatus enum validation in Employee tests (testing all enum values: OWNER, MANAGER, CASHIER, WAITER, CHEF)
 
 ### Running Tests
 ```bash
